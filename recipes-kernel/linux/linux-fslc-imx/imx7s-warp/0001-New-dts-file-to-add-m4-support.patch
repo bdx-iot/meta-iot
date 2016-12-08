@@ -1,0 +1,118 @@
+From 35dae9c71a16398943c22ee065c99a842dafeeba Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Mon, 14 Nov 2016 17:22:34 +0100
+Subject: [PATCH 1/2] New dts file to add m4 support
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/Makefile           |  3 +-
+ arch/arm/boot/dts/imx7s-warp-m4.dts  |  9 +++++
+ arch/arm/boot/dts/imx7s-warp-m4.dtsi | 66 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-m4.dts
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-m4.dtsi
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 8c18e59..87b410b 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -401,7 +401,8 @@ dtb-$(CONFIG_SOC_IMX7D) += \
+ 	imx7d-sdb-reva-qspi.dtb \
+ 	imx7d-sdb-reva-touch.dtb \
+ 	imx7d-sdb-reva-wm8960.dtb \
+-	imx7s-warp.dtb
++	imx7s-warp.dtb \
++	imx7s-warp-m4.dtb 
+ dtb-$(CONFIG_SOC_LS1021A) += \
+ 	ls1021a-qds.dtb \
+ 	ls1021a-twr.dtb
+diff --git a/arch/arm/boot/dts/imx7s-warp-m4.dts b/arch/arm/boot/dts/imx7s-warp-m4.dts
+new file mode 100644
+index 0000000..dd88151
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-m4.dts
+@@ -0,0 +1,9 @@
++/*
++ * Copyright (C) 2015 Freescale Semiconductor, Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "imx7s-warp.dts"
++#include "imx7s-warp-m4.dtsi"
+diff --git a/arch/arm/boot/dts/imx7s-warp-m4.dtsi b/arch/arm/boot/dts/imx7s-warp-m4.dtsi
+new file mode 100644
+index 0000000..78f66c0
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-m4.dtsi
+@@ -0,0 +1,66 @@
++/*
++ * Copyright (C) 2015 Freescale Semiconductor, Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++/ {
++	memory {
++		linux,usable-memory = <0x80000000 0x1ff00000>,
++				<0xa0000000 0x1ff00000>;
++	};
++	
++	gpio-keys {
++		status = "disabled";
++	};
++
++	m4_tcm: tcml@007f8000 {
++		compatible = "fsl, m4_tcml";
++		reg = <0x007f8000 0x8000>;
++	};
++};
++
++&adc1 {
++	status = "disabled";
++};
++
++&adc2 {
++	status = "disabled";
++};
++
++&flexcan1 {
++	status = "disabled";
++};
++
++&flexcan2 {
++	status = "disabled";
++};
++
++&i2c4 {
++	status = "disabled";
++};
++
++&gpt3 {
++	status = "disabled";
++};
++
++&gpt4 {
++	status = "disabled";
++};
++
++&ocram {
++	reg = <0x00901000 0xf000>;
++};
++
++&uart2{
++	status = "disabled";
++};
++ 	
++&rpmsg{
++	status = "okay";
++};
++
++&wdog3{
++	status = "disabled";
++};
+-- 
+1.9.1
+

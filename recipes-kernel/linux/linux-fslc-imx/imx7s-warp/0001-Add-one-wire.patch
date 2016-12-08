@@ -1,0 +1,47 @@
+From 34d3f32f685d42730125c2a33562a6f9b2fa152e Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Wed, 7 Dec 2016 15:25:45 +0100
+Subject: [PATCH] Add one wire
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/imx7s-warp-w1.dts | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-w1.dts
+
+diff --git a/arch/arm/boot/dts/imx7s-warp-w1.dts b/arch/arm/boot/dts/imx7s-warp-w1.dts
+new file mode 100644
+index 0000000..001ba3b
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-w1.dts
+@@ -0,0 +1,27 @@
++
++
++#include "imx7s-warp.dts"
++
++/ {		
++	onewire@0 {
++		compatible = "w1-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_w1>;
++		gpios = <&gpio7 8 GPIO_ACTIVE_HIGH>;
++		input;
++	};	
++};
++
++
++
++&iomuxc {
++	pinctrl-names = "default";
++	imx7s-warp {
++		
++		pinctrl_w1: w1grp {
++			fsl,pins = <
++				MX7D_PAD_ENET1_RGMII_TD2__GPIO7_IO8        0x00000054
++			>;
++		};
++	};
++};
+-- 
+1.9.1
+

@@ -1,0 +1,25 @@
+SUMMARY = "Qt BLE Server : Open Silicium n°20 demo"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+
+SRC_URI = " \
+	git://github.com/bdx-iot/os20-ble-server;protocol=git \
+	file://init-ble-server.init \
+"
+
+SRCREV = "${AUTOREV}"
+S = "${WORKDIR}/git"
+
+DEPENDS = " qtbase qtconnectivity"
+
+inherit qmake5 update-rc.d
+
+do_install_append() {
+		
+        install -d ${D}${sysconfdir}/init.d/
+        
+        install -m 0755 ${WORKDIR}/init-ble-server.init ${D}${sysconfdir}/init.d/init-ble-server
+}
+
+INITSCRIPT_NAME = "init-ble-server"
+INITSCRIPT_PARAMS = "start 99 5 2 . stop 19 0 1 6 ."
