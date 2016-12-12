@@ -1,0 +1,50 @@
+From dcca6871ddcdbc66e0cc6e272a093c194acb47ca Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Mon, 12 Dec 2016 17:36:54 +0100
+Subject: [PATCH] Add click tilt
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/imx7s-warp-tilt.dts | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-tilt.dts
+
+diff --git a/arch/arm/boot/dts/imx7s-warp-tilt.dts b/arch/arm/boot/dts/imx7s-warp-tilt.dts
+new file mode 100644
+index 0000000..b47889a
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-tilt.dts
+@@ -0,0 +1,30 @@
++#include "imx7s-warp.dts"
++
++/ {
++	gpio_exporter: gpio-exporter {
++		compatible = "linux,gpio-exporter";	
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_gpioexporter_tilt>;
++	
++		in_vout1 {
++			gpios = <&gpio7 8 0>;
++		};
++		
++		in_vout2 {
++			gpios = <&gpio7 7 0>;
++		};
++	};
++};
++
++&iomuxc {
++	pinctrl-names = "default";
++	imx7s-warp {
++		
++		pinctrl_gpioexporter_tilt: gpioexportergrp {
++			fsl,pins = <
++				MX7D_PAD_ENET1_RGMII_TD2__GPIO7_IO8	0x14	/* VOUT1 */
++				MX7D_PAD_ENET1_RGMII_TD1__GPIO7_IO7	0x14	/* VOUT2 */
++			>;
++		};
++	};
++};
+-- 
+1.9.1
+
