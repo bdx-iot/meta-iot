@@ -36,6 +36,8 @@ CORE_OS_INSTALL = " \
     	kernel-image \
     	kernel-modules \
     	firmware-imx-brcm \
+    	dnsmasq \
+    	hostapd \
 "
 
 IMAGE_INSTALL += " \

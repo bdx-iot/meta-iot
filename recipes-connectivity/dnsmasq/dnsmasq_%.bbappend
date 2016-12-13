@@ -1,3 +1,3 @@
 # Files directory
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/dnsmasq:"
 
