@@ -1,0 +1,62 @@
+From 3989796922ee12f17633d6651bed65670336ca8c Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Wed, 4 Jan 2017 17:26:02 +0100
+Subject: [PATCH] add support for TRI Board
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/imx7s-warp-tri.dts | 42 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-tri.dts
+
+diff --git a/arch/arm/boot/dts/imx7s-warp-tri.dts b/arch/arm/boot/dts/imx7s-warp-tri.dts
+new file mode 100644
+index 0000000..142cddf
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-tri.dts
+@@ -0,0 +1,42 @@
++#include "imx7s-warp.dts"
++
++&ecspi2 {
++	fsl,spi-num-chipselects = <2>;
++	cs-gpios = <&gpio4 23 GPIO_ACTIVE_LOW>,
++	 	   <&gpio1 8 GPIO_ACTIVE_LOW>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_ecspi2>;
++	status = "okay";		
++		
++	delay1: ds1023@0 {
++		compatible = "spidev";
++		reg = <0>;
++		spi-max-frequency = <10000000>;
++		spi-cs-high;
++	};
++	
++	delay2: ds1023@1 {
++		compatible = "spidev";
++		reg = <1>;
++		spi-max-frequency = <10000000>;
++		spi-cs-high;
++	};
++};
++
++
++&iomuxc {
++	pinctrl-names = "default";
++	imx7s-warp {
++		
++		pinctrl_ecspi2: ecspi2grp {
++			fsl,pins = <
++				MX7D_PAD_ECSPI2_MISO__ECSPI2_MISO          0x00000014
++				MX7D_PAD_ECSPI2_MOSI__ECSPI2_MOSI          0x00000014
++				MX7D_PAD_ECSPI2_SCLK__ECSPI2_SCLK          0x00000014
++				MX7D_PAD_ECSPI2_SS0__ECSPI2_SS0            0x00000014	/* CS1 */
++				MX7D_PAD_GPIO1_IO08__GPIO1_IO8		   0x00000014	/* CS2 */
++			>;
++		};
++	};
++};
++
+-- 
+1.9.1
+
