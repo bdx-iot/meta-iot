@@ -1,0 +1,129 @@
+From a09a05dba239ac8a02cb1450246fd105ce8cfead Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Fri, 6 Jan 2017 14:16:24 +0100
+Subject: [PATCH 2/5] Add new dts file tri board
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/imx7s-warp-tri.dts | 88 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 78 insertions(+), 10 deletions(-)
+
+diff --git a/arch/arm/boot/dts/imx7s-warp-tri.dts b/arch/arm/boot/dts/imx7s-warp-tri.dts
+index 142cddf..cb75b45 100644
+--- a/arch/arm/boot/dts/imx7s-warp-tri.dts
++++ b/arch/arm/boot/dts/imx7s-warp-tri.dts
+@@ -1,25 +1,77 @@
+ #include "imx7s-warp.dts"
+ 
++/ {
++	
++	onewire@0 {
++		compatible = "w1-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_w1>;
++		gpios = <&gpio7 8 GPIO_ACTIVE_HIGH>;
++		input;
++	};
++	
++	gpio_exporter: gpio-exporter {
++		compatible = "linux,gpio-exporter";	
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_gpioexporter_mikrobus>;
++		
++		out_MIKROBUS_RST {
++			gpios = <&gpio7 6 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++		
++		out_MIKROBUS_SCL {
++			gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++		
++		out_MIKROBUS_SDA {
++			gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++		
++		out_MIKROBUS_TX {
++			gpios = <&gpio4 16 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++		
++		out_MIKROBUS_RX {
++			gpios = <&gpio4 17 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++	};
++};
++
+ &ecspi2 {
++
+ 	fsl,spi-num-chipselects = <2>;
+ 	cs-gpios = <&gpio4 23 GPIO_ACTIVE_LOW>,
+-	 	   <&gpio1 8 GPIO_ACTIVE_LOW>;
++	 	   <&gpio7 7 GPIO_ACTIVE_LOW>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_ecspi2>;
+ 	status = "okay";		
+ 		
+-	delay1: ds1023@0 {
+-		compatible = "spidev";
++	dpot: ad5231@0 {
++		compatible = "adi,ad5231";
++		#io-channel-cells = <1>;	
++		#address-cells = <1>;
++		#size-cells = <0>;		
+ 		reg = <0>;
+-		spi-max-frequency = <10000000>;
+-		spi-cs-high;
++		spi-max-frequency = <5000000>;
+ 	};
+ 	
+-	delay2: ds1023@1 {
+-		compatible = "spidev";
++	adc: mcp3204@1 {
++		compatible = "mcp3204";
++		#io-channel-cells = <1>;	
++		#address-cells = <1>;
++		#size-cells = <0>;		
+ 		reg = <1>;
+-		spi-max-frequency = <10000000>;
+-		spi-cs-high;
++		spi-max-frequency = <2000000>;
+ 	};
+ };
+ 
+@@ -34,7 +86,23 @@
+ 				MX7D_PAD_ECSPI2_MOSI__ECSPI2_MOSI          0x00000014
+ 				MX7D_PAD_ECSPI2_SCLK__ECSPI2_SCLK          0x00000014
+ 				MX7D_PAD_ECSPI2_SS0__ECSPI2_SS0            0x00000014	/* CS1 */
+-				MX7D_PAD_GPIO1_IO08__GPIO1_IO8		   0x00000014	/* CS2 */
++				MX7D_PAD_ENET1_RGMII_TD1__GPIO7_IO7	   0x00000014	/* CS2 : INT */
++			>;
++		};
++		
++		pinctrl_w1: w1grp {
++			fsl,pins = <
++				MX7D_PAD_ENET1_RGMII_TD2__GPIO7_IO8        0x00000034
++			>;
++		};
++		
++		pinctrl_gpioexporter_mikrobus: gpioexportergrp {
++			fsl,pins = <
++				MX7D_PAD_ENET1_RGMII_TD0__GPIO7_IO6	0x14 	/* RST */
++				MX7D_PAD_GPIO1_IO08__GPIO1_IO8		0x14	/* SCL */
++				MX7D_PAD_GPIO1_IO09__GPIO1_IO9		0x14	/* SDA */
++				MX7D_PAD_ECSPI1_SCLK__GPIO4_IO16	0x14	/* TX */
++				MX7D_PAD_ECSPI1_MOSI__GPIO4_IO17	0x14	/* RX */
+ 			>;
+ 		};
+ 	};
+-- 
+1.9.1
+

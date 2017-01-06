@@ -1,19 +1,19 @@
-From 3989796922ee12f17633d6651bed65670336ca8c Mon Sep 17 00:00:00 2001
+From ff4acf23f27cda89b07ea22c03b4264c52e11cd0 Mon Sep 17 00:00:00 2001
 From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
-Date: Wed, 4 Jan 2017 17:26:02 +0100
-Subject: [PATCH] add support for TRI Board
+Date: Fri, 6 Jan 2017 14:16:55 +0100
+Subject: [PATCH 3/5] Add new dts file adpot spi board
 
 Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
 ---
- arch/arm/boot/dts/imx7s-warp-tri.dts | 42 ++++++++++++++++++++++++++++++++++++
+ arch/arm/boot/dts/imx7s-warp-adpot.dts | 42 ++++++++++++++++++++++++++++++++++
  1 file changed, 42 insertions(+)
- create mode 100644 arch/arm/boot/dts/imx7s-warp-tri.dts
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-adpot.dts
 
-diff --git a/arch/arm/boot/dts/imx7s-warp-tri.dts b/arch/arm/boot/dts/imx7s-warp-tri.dts
+diff --git a/arch/arm/boot/dts/imx7s-warp-adpot.dts b/arch/arm/boot/dts/imx7s-warp-adpot.dts
 new file mode 100644
 index 0000000..142cddf
 --- /dev/null
-+++ b/arch/arm/boot/dts/imx7s-warp-tri.dts
++++ b/arch/arm/boot/dts/imx7s-warp-adpot.dts
 @@ -0,0 +1,42 @@
 +#include "imx7s-warp.dts"
 +

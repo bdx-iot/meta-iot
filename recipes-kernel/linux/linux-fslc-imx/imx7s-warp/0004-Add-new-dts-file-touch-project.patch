@@ -1,0 +1,53 @@
+From 54052c59a7cc6c7425caea8df5d0dc0a48c01329 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+Date: Fri, 6 Jan 2017 14:17:11 +0100
+Subject: [PATCH 4/5] Add new dts file touch project
+
+Signed-off-by: Pierre-Jean TEXIER <pjtexier@amplitude-systemes.com>
+---
+ arch/arm/boot/dts/imx7s-warp-touch.dts | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-touch.dts
+
+diff --git a/arch/arm/boot/dts/imx7s-warp-touch.dts b/arch/arm/boot/dts/imx7s-warp-touch.dts
+new file mode 100644
+index 0000000..0a4dd01
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-touch.dts
+@@ -0,0 +1,33 @@
++#include "imx7s-warp.dts"
++
++/ {
++	gpio_exporter: gpio-exporter {
++		compatible = "linux,gpio-exporter";	
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_gpioexporter_touch>;
++	
++		in_touch {
++			gpios = <&gpio7 8 0>;
++		};
++		
++		out_motor {
++			gpios = <&gpio7 7 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++	};
++};
++
++&iomuxc {
++	pinctrl-names = "default";
++	imx7s-warp {
++		
++		pinctrl_gpioexporter_touch: gpioexportergrp {
++			fsl,pins = <
++				MX7D_PAD_ENET1_RGMII_TD2__GPIO7_IO8	0x14	/* TOUCH */
++				MX7D_PAD_ENET1_RGMII_TD1__GPIO7_IO7	0x14	/* MOTOR */
++			>;
++		};
++	};
++};
++
+-- 
+1.9.1
+
