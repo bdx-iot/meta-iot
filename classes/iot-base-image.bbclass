@@ -24,7 +24,6 @@ ALSA_INSTALL = " \
 "
 
 MIKROBUS_INSTALL = " \
-    	service-relay \
     	clicks-board-init \
 "
 
@@ -35,7 +34,6 @@ CORE_OS_INSTALL = " \
     	kernel-devicetree \
     	kernel-image \
     	kernel-modules \
-    	firmware-imx-brcm \
     	dnsmasq \
     	hostapd \
 "
